@@ -6,10 +6,7 @@ namespace SeaBox
 {
     class AnimalBase: MonoBehaviour
     {
-        public virtual void FreeMove()
-        {
-            Console.WriteLine("AnimalBase FreeMove");
-        }
+
     }
 
     class ToolsAnimal:AnimalBase
@@ -21,5 +18,10 @@ namespace SeaBox
     {
         public AnimalHealthStatus curHealthStatus = AnimalHealthStatus.None;
         public int curHungerValue;
+
+        public virtual void FreeMove()
+        {
+            Console.WriteLine("GoldAnimal FreeMove");
+        }
     }
 }

@@ -81,24 +81,24 @@ namespace SeaBox
         }
         //--------End Animator Controller----------//
 
-        //--------Begin Active Controller----------//
+        //--------Begin AnimActive Controller----------//
 
-        public void FindFood()
+        public void AnimFindFood()
         {
 
         }
-        public void ToSeeGod()
+        public void AnimToSeeGod()
         {
 
         }
-        public void AvoidDanger()
+        public void AnimAvoidDanger()
         {
 
         }
-        public void HappySwim()
+        public void AnimHappySwim()
         {
             Idel();
         }
-        //--------End Active Controller----------//
+        //--------End AnimActive Controller----------//
     }
 }

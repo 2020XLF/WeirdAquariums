@@ -8,6 +8,7 @@ namespace SeaBox
         
         public float refreshTime;
         public int GrowValue;
+        public Transform movePos;
         private GuppyFishGrowStatus curGrowStatus = GuppyFishGrowStatus.MiniFish;
         private Animator myAnim;
         private GuppyFishController controllerFish;
@@ -17,6 +18,7 @@ namespace SeaBox
             //Init Status
             curHealthStatus = AnimalHealthStatus.Normal;
             curGrowStatus = GuppyFishGrowStatus.MiniFish;
+            movePos.position = GameStaticUtil.Instance.GetRandomPos();
 
             myAnim = GetComponent<Animator>();
 
@@ -34,25 +36,47 @@ namespace SeaBox
         {
             controllerFish.refreshFishStatus();
             SwitchActiveWay();
+            FreeMove();
         }
 
         void SwitchActiveWay()
         {
             if(this.curHealthStatus = AnimalHealthStatus.Hunger)
             {
-                controllerFish.FindFood();
+                controllerFish.AnimFindFood();
             }
             else if(this.curHealthStatus == AnimalHealthStatus.Death)
             {
-                controllerFish.ToSeeGod();
+                controllerFish.AnimToSeeGod();
             }
             else if(this.curHealthStatus == AnimalHealthStatus.Dangerous)
             {
-                controllerFish.AvoidDanger();
+                controllerFish.AnimAvoidDanger();
             }
             else
             {
-                controllerFish.HappySwim();
+                FreeMove();
+                controllerFish.AnimHappySwim();
+            }
+        }
+        public override void FreeMove()
+        {
+            
+            if(Vector2.Distance(transform.position, movePos.position) < 0.1f)
+            {
+                if(waitTime <= 0)
+                {
+                    movePos.position = GameStaticUtil.Instance.GetRandomPos();
+                    waitTime = startWaitTime;
+                }
+                else
+                {
+                    waitTime -= Time.deltaTime;
+                }
+            }
+            else
+            {
+                transform.position = Vector2.MoveTowards(transform.position, movePos.position, speed * Time.deltaTime);
             }
         }
         private void CoroutineTimer() 
